@@ -18,18 +18,15 @@ class Weather(object):
       """
 
       uri = f"https://aviationweather.gov/metar/data?ids={APT}"
-      while True:
-         web = requests.get(uri)
-         if web.ok:
-            soup = BeautifulSoup(web.text, "html.parser")
-            try:
-               return soup.code.text
-            except AttributeError:
-               print("Error occured")
-               continue
-         else:
-            print(f"Web error occured. code {web.status_code}")
-            break
+      web = requests.get(uri)
+      if web.ok:
+         soup = BeautifulSoup(web.text, "html.parser")
+         try:
+            return soup.code.text
+         except AttributeError:
+            return "Invalid airport"
+      else:
+         print(f"Web error occured. code {web.status_code}")
 
    @staticmethod
    def taf(APT="EIDW"):
@@ -39,25 +36,21 @@ class Weather(object):
       """
 
       uri = f"https://aviationweather.gov/taf/data?ids={APT}"
-      while True:
-         web = requests.get(uri)
-         if web.ok:
-            soup = BeautifulSoup(web.text, "html.parser")
-            try:
-               return soup.code.text
-            except AttributeError:
-               print("Error occured")
-               continue
-         else:
-            print(f"Web error occured. code {web.status_code}")
-            break
-
+      web = requests.get(uri)
+      if web.ok:
+         soup = BeautifulSoup(web.text, "html.parser")
+         try:
+            return soup.code.text
+         except AttributeError:
+            return "Invalid airport"
+      else:
+         print(f"Web error occured. code {web.status_code}")
 
 def main():
    print(" --- Airport METAR / TAF testing --- ")
 
-   print(Weather.metar("EGLL"))
-   print(Weather.metar("KLAX"))
+   # print(Weather.metar("EGLL"))
+   # print(Weather.taf("KLAX"))
    print(Weather.metar())
 
 
