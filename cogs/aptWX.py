@@ -4,21 +4,52 @@ import requests
 from bs4 import BeautifulSoup
 import asyncio
 import aiohttp
+import discord
+from discord.ext import commands
 
 """
-Airport METAR/TAF Lib
+Airport METAR/TAF Discord Cog
 
 By Joseph Libasora
 Last updated: 19.SEPT.2020, Python 3.8.2
 """
 
-class Weather(object):
+class Weather(commands.Cog):
    """
-   Aviation METAR/TAF request lib
+   Aviation METAR/TAF request lib for Discord
    
    Synchronous/Asynchronous requests
    """
 
+   def __init__(self, client):
+      """Init"""
+      self.client = client
+
+   @commands.Cog.listener()
+   async def on_ready(self):
+      """Reports when aptWX cog is ready"""
+      print("AviationBot aptWX cog ready")
+
+   @commands.command()
+   async def WX_ping(self, ctx):
+      """Returns latency between WX and main"""
+      print("Pong aptWX.")
+      await ctx.send("Pong aptWX")
+   
+   @commands.command(aliases=["METAR"])
+   async def metar(self, ctx, APT="EIDW"):
+      """Returns METAR for airport passed as arguement"""
+      print(f"METAR {APT}")
+      await ctx.send(await Weather.async_metar(APT))
+
+   @commands.command(aliases=["TAF"])
+   async def taf(self, ctx, APT="EIDW"):
+      """Returns TAF for airport passed as arguement"""
+      print(f"TAF {APT}")
+      await ctx.send(await Weather.async_taf(APT))
+
+
+   # ------ Static methods not bound to discord ------
    @staticmethod
    def sync_metar(APT="EIDW"):
       """
@@ -99,22 +130,25 @@ class Weather(object):
                return "Warning, Error occured. code: {web_resp.status}"
       return "Warning, request timeout"
 
+def setup(client):
+   client.add_cog(Weather(client))
+
 
 def main():
    print(" --- Airport METAR / TAF testing --- ")
 
-   # print(Weather.sync_metar("EGLL"))
+   print(Weather.sync_metar("EGLL"))
    # print(Weather.sync_taf("KLAX"))
-   print(Weather.sync_metar())
+   # print(Weather.sync_metar())
 
 
 async def amain():
    print(" --- Airport METAR / TAF testing --- ")
 
-   print(await Weather.async_metar())
-   print(await Weather.async_taf("KLAX"))
+   # print(await Weather.async_metar())
+   # print(await Weather.async_taf("KLAX"))
 
 
 if __name__ == "__main__":
-   # main()
-   asyncio.run(amain())
+   main()
+   # asyncio.run(amain())

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from aptWX import Weather
+import os
 import discord
 from discord.ext import commands
 import sys
@@ -16,27 +16,30 @@ client = commands.Bot(command_prefix=".")
 
 @client.event
 async def on_ready():
-   """Reports when bot is ready"""
-   print("AviationBot ready")
+   """Reports when main bot is ready"""
+   print("AviationBot main ready")
 
 @client.command()
 async def ping(ctx):
    """Returns latency between bot and server"""
-   print(f"Pong {round(client.latency * 1000)}ms")
-   await ctx.send(f"Pong {round(client.latency * 1000)}ms")
+   print(f"Pong main. {round(client.latency * 1000)}ms")
+   await ctx.send(f"Pong main. {round(client.latency * 1000)}ms")
 
-@client.command(aliases=["METAR"])
-async def metar(ctx, APT="EIDW"):
-   """Returns METAR for airport passed as arguement"""
-   print(f"METAR {APT}")
-   await ctx.send(await Weather.async_metar(APT))
+@client.command()
+async def c_load(ctx, path):
+   """Loads cogs"""
+   client.load_extension(f"cogs.{path}")
+   print(f"Cog: {path} loaded")
 
-@client.command(aliases=["TAF"])
-async def taf(ctx, APT="EIDW"):
-   """Returns TAF for airport passed as arguement"""
-   print(f"TAF {APT}")
-   await ctx.send(await Weather.async_taf(APT))
+@client.command()
+async def c_unload(ctx, path):
+   """Unloads cogs"""
+   client.unload_extension(f"cogs.{path}")
+   print(f"Cog: {path} unloaded")
 
+for file_n in os.listdir("./cogs"):
+   if file_n.endswith(".py"):
+      client.load_extension(f"cogs.{file_n[:-3]}")
 
 def main():
    """
