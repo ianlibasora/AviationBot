@@ -38,7 +38,7 @@ class Weather(commands.Cog):
    @commands.command(aliases=["METAR"])
    async def metar(self, ctx, APT="EIDW"):
       """Returns METAR for airport passed as arguement"""
-      print(f"METAR {APT}")
+      print(f"METAR {APT.upper()}")
       embed = discord.Embed(
          title=f"{APT.upper()} METAR", 
          colour=discord.Colour.red(),
@@ -50,7 +50,7 @@ class Weather(commands.Cog):
    @commands.command(aliases=["TAF"])
    async def taf(self, ctx, APT="EIDW"):
       """Returns TAF for airport passed as arguement"""
-      print(f"TAF {APT}")
+      print(f"TAF {APT.upper()}")
       embed = discord.Embed(
          title=f"{APT.upper()} TAF", 
          colour=discord.Colour.red(),
