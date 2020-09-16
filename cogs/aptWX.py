@@ -59,6 +59,18 @@ class Weather(commands.Cog):
       embed.set_author(name="AVWeather", icon_url="https://cdn.discordapp.com/attachments/755454464303038536/755786158558150807/plane.png")
       await ctx.send(embed=embed)
 
+   @commands.command(aliases=["WX", "wx"])
+   async def report(self, ctx, APT="EIDW"):
+      """Returns airport METAR/TAF passed as arguement"""
+      print(f"Report {APT.upper()}")
+      embed = discord.Embed(
+         title=f"{APT.upper()} Weather Report", 
+         colour=discord.Colour.red()
+      )
+      embed.set_author(name="AVWeather", icon_url="https://cdn.discordapp.com/attachments/755454464303038536/755786158558150807/plane.png")
+      embed.add_field(name="METAR", value=await Weather.async_metar(APT), inline=False)
+      embed.add_field(name="TAF", value=await Weather.async_taf(APT), inline=False)
+      await ctx.send(embed=embed)
 
    # ------ Static methods not bound to discord ------
    @staticmethod

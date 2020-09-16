@@ -17,8 +17,9 @@ pip install requests
 
 ## Commands Available
 Commands are all prefixed by "."
-- metar - Accepts airport ICAO code as an arguement, returns latest airport METAR report
-- taf - Accepts airport ICAO code as an arguement, returns latest airport METAR report
+- METAR / metar - Accepts airport ICAO code as an arguement, returns latest airport METAR report
+- TAF / taf - Accepts airport ICAO code as an arguement, returns latest airport METAR report
+- WX / wx / report - Accepts airport ICAO code as an arguement, returns latest airport METAR & TAF report
 
 ### Notes
 - Bot token is stored in a ".token.txt" file
