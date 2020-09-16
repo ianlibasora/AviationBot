@@ -16,22 +16,36 @@ client = commands.Bot(command_prefix=".")
 
 @client.event
 async def on_ready():
+   """Reports when bot is ready"""
    print("AviationBot ready")
 
-@client.event
-async def on_message(message):
-   if message.author == client.user:
-     return
+@client.command()
+async def ping(ctx):
+   """Returns latency between bot and server"""
+   print(f"Pong {round(client.latency * 1000)}ms")
+   await ctx.send(f"Pong {round(client.latency * 1000)}ms")
 
-   if message.content.startswith('$hello'):
-     await message.channel.send('Hello!')
+@client.command(aliases=["METAR"])
+async def metar(ctx, APT="EIDW"):
+   """Returns METAR for airport passed as arguement"""
+   print(f"METAR {APT}")
+   await ctx.send(await Weather.async_metar(APT))
 
-
-
-
+@client.command(aliases=["TAF"])
+async def taf(ctx, APT="EIDW"):
+   """Returns TAF for airport passed as arguement"""
+   print(f"TAF {APT}")
+   await ctx.send(await Weather.async_taf(APT))
 
 
 def main():
+   """
+   Bot token management
+   
+   Note: 
+    - Bot token is kept in the '.token.txt' file
+    - This is to avoid the sharing of bot tokens
+   """
    global token
    try:
       with open("./.token.txt") as fd:
