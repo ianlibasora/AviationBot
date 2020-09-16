@@ -2,7 +2,6 @@
 
 import requests
 from bs4 import BeautifulSoup
-import asyncio
 import aiohttp
 import discord
 from discord.ext import commands
@@ -40,13 +39,25 @@ class Weather(commands.Cog):
    async def metar(self, ctx, APT="EIDW"):
       """Returns METAR for airport passed as arguement"""
       print(f"METAR {APT}")
-      await ctx.send(await Weather.async_metar(APT))
+      embed = discord.Embed(
+         title=f"{APT.upper()} METAR", 
+         colour=discord.Colour.red(),
+         description=await Weather.async_metar(APT)
+      )
+      embed.set_author(name="AVWeather", icon_url="https://cdn.discordapp.com/attachments/755454464303038536/755786158558150807/plane.png")
+      await ctx.send(embed=embed)
 
    @commands.command(aliases=["TAF"])
    async def taf(self, ctx, APT="EIDW"):
       """Returns TAF for airport passed as arguement"""
       print(f"TAF {APT}")
-      await ctx.send(await Weather.async_taf(APT))
+      embed = discord.Embed(
+         title=f"{APT.upper()} TAF", 
+         colour=discord.Colour.red(),
+         description=await Weather.async_taf(APT)
+      )
+      embed.set_author(name="AVWeather", icon_url="https://cdn.discordapp.com/attachments/755454464303038536/755786158558150807/plane.png")
+      await ctx.send(embed=embed)
 
 
    # ------ Static methods not bound to discord ------
@@ -137,7 +148,7 @@ def setup(client):
 def main():
    print(" --- Airport METAR / TAF testing --- ")
 
-   print(Weather.sync_metar("EGLL"))
+   # print(Weather.sync_metar("EGLL"))
    # print(Weather.sync_taf("KLAX"))
    # print(Weather.sync_metar())
 
@@ -145,10 +156,11 @@ def main():
 async def amain():
    print(" --- Airport METAR / TAF testing --- ")
 
-   # print(await Weather.async_metar())
+   print(await Weather.async_metar())
    # print(await Weather.async_taf("KLAX"))
 
 
 if __name__ == "__main__":
-   main()
-   # asyncio.run(amain())
+   import asyncio
+   # main()
+   asyncio.run(amain())

@@ -37,6 +37,13 @@ async def c_unload(ctx, path):
    client.unload_extension(f"cogs.{path}")
    print(f"Cog: {path} unloaded")
 
+@client.command()
+async def c_reload(ctx, path):
+   """Reloads cog"""
+   client.unload_extension(f"cogs.{path}")
+   client.load_extension(f"cogs.{path}")
+   print(f"Cog: {path} reloaded")
+
 for file_n in os.listdir("./cogs"):
    if file_n.endswith(".py"):
       client.load_extension(f"cogs.{file_n[:-3]}")
