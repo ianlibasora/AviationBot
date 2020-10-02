@@ -27,18 +27,18 @@ class Weather(commands.Cog):
    @commands.Cog.listener()
    async def on_ready(self):
       """Reports when aptWX cog is ready"""
-      print("AviationBot aptWX cog ready")
+      # print("AviationBot aptWX cog ready")
 
    @commands.command()
    async def WX_ping(self, ctx):
       """Returns latency between WX and main"""
-      print("Pong aptWX.")
+      # print("Pong aptWX.")
       await ctx.send("Pong aptWX")
    
    @commands.command(aliases=["METAR"])
    async def metar(self, ctx, APT="EIDW"):
       """Returns METAR for airport passed as arguement"""
-      print(f"METAR {APT.upper()}")
+      # print(f"METAR {APT.upper()}")
       embed = discord.Embed(
          title=f"{APT.upper()} METAR", 
          colour=discord.Colour.red(),
@@ -50,7 +50,7 @@ class Weather(commands.Cog):
    @commands.command(aliases=["TAF"])
    async def taf(self, ctx, APT="EIDW"):
       """Returns TAF for airport passed as arguement"""
-      print(f"TAF {APT.upper()}")
+      # print(f"TAF {APT.upper()}")
       embed = discord.Embed(
          title=f"{APT.upper()} TAF", 
          colour=discord.Colour.red(),
@@ -62,7 +62,7 @@ class Weather(commands.Cog):
    @commands.command(aliases=["WX", "wx"])
    async def report(self, ctx, APT="EIDW"):
       """Returns airport METAR/TAF passed as arguement"""
-      print(f"Report {APT.upper()}")
+      # print(f"Report {APT.upper()}")
       embed = discord.Embed(
          title=f"{APT.upper()} Weather Report", 
          colour=discord.Colour.red()

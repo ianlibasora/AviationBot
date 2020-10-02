@@ -17,32 +17,35 @@ client = commands.Bot(command_prefix=".")
 @client.event
 async def on_ready():
    """Reports when main bot is ready"""
-   print("AviationBot main ready")
+   # print("AviationBot main ready")
 
 @client.command()
 async def ping(ctx):
    """Returns latency between bot and server"""
-   print(f"Pong main. {round(client.latency * 1000)}ms")
+   # print(f"Pong main. {round(client.latency * 1000)}ms")
    await ctx.send(f"Pong main. {round(client.latency * 1000)}ms")
 
 @client.command()
 async def c_load(ctx, path):
    """Loads cogs"""
    client.load_extension(f"cogs.{path}")
-   print(f"Cog: {path} loaded")
+   await ctx.send(f"Cog: {path} loaded")
+   # print(f"Cog: {path} loaded")
 
 @client.command()
 async def c_unload(ctx, path):
    """Unloads cogs"""
    client.unload_extension(f"cogs.{path}")
-   print(f"Cog: {path} unloaded")
+   await ctx.send(f"Cog: {path} unloaded")
+   # print(f"Cog: {path} unloaded")
 
 @client.command()
 async def c_reload(ctx, path):
    """Reloads cog"""
    client.unload_extension(f"cogs.{path}")
    client.load_extension(f"cogs.{path}")
-   print(f"Cog: {path} reloaded")
+   await ctx.send(f"Cog: {path} reloaded")
+   # print(f"Cog: {path} reloaded")
 
 for file_n in os.listdir("./cogs"):
    if file_n.endswith(".py"):
